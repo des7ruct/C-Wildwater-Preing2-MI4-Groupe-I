@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "avl.h"
-#include "utils.h"
+#include "outils.h"
 #include "usine.h"
 #include "histogramme.h"
 
