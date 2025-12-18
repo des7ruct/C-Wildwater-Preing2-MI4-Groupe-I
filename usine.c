@@ -41,3 +41,4 @@ float chaine_vers_float(char *s) {
 
     return r / div;
 }
+
