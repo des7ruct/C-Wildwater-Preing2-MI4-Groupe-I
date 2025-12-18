@@ -3,6 +3,7 @@
 
 int chaine_vers_int(char *s) {
     int r = 0;
+
     if (s == NULL) {
         return 0;
     }
@@ -40,4 +41,3 @@ float chaine_vers_float(char *s) {
 
     return r / div;
 }
-
