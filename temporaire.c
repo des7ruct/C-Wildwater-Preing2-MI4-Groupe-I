@@ -1,151 +1,176 @@
-/* tree.h */
+/*/////////////////////////////////////////*/
+/*   Nœud de l’arbre normal (réseau aval)  */
+/*/////////////////////////////////////////*/
 
-#ifndef TREE_H
-#define TREE_H
+/* arbre.h */
 
-typedef struct TreeNode TreeNode;
+#ifndef ARBRE_H
+#define ARBRE_H
 
-typedef struct Child {
-    TreeNode *node;
-    struct Child *next;
-} Child;
+typedef struct NoeudArbre NoeudArbre;
 
-struct TreeNode {
-    double volume;          // Volume d'eau entrant
-    double leak_percent;    // % de fuite depuis le parent
-    Child *children;        // Liste chaînée des enfants
+/* Liste chaînée des enfants */
+typedef struct Enfant {
+    NoeudArbre *noeud;
+    struct Enfant *suivant;
+} Enfant;
+
+/* Nœud du réseau de distribution */
+struct NoeudArbre {
+    double volume;              // Volume d'eau entrant
+    double pourcentage_fuite;   // % de fuite du tronçon parent → ce nœud
+    Enfant *enfants;            // Liste chaînée des enfants
 };
 
-TreeNode *tree_node_create(double volume, double leak);
-void tree_node_add_child(TreeNode *parent, TreeNode *child);
+NoeudArbre *creer_noeud_arbre(double volume, double fuite);
+void ajouter_enfant(NoeudArbre *parent, NoeudArbre *enfant);
 
 #endif
 
-////////////////
+/*/////////////////////////////////////////*/
+/*    Implémentation de l’arbre normal     */
+/*/////////////////////////////////////////*/
 
-/* tree.c */
+/* arbre.c */
 
 #include <stdlib.h>
-#include "tree.h"
+#include "arbre.h"
 
-TreeNode *tree_node_create(double volume, double leak) {
-    TreeNode *n = malloc(sizeof(TreeNode));
+NoeudArbre *creer_noeud_arbre(double volume, double fuite) {
+    NoeudArbre *n = malloc(sizeof(NoeudArbre));
     if (!n) return NULL;
 
     n->volume = volume;
-    n->leak_percent = leak;
-    n->children = NULL;
+    n->pourcentage_fuite = fuite;
+    n->enfants = NULL;
     return n;
 }
 
-void tree_node_add_child(TreeNode *parent, TreeNode *child) {
-    Child *c = malloc(sizeof(Child));
-    c->node = child;
-    c->next = parent->children;
-    parent->children = c;
+void ajouter_enfant(NoeudArbre *parent, NoeudArbre *enfant) {
+    Enfant *e = malloc(sizeof(Enfant));
+    e->noeud = enfant;
+    e->suivant = parent->enfants;
+    parent->enfants = e;
 }
 
-//////////////////////
+/*/////////////////////////////////////////*/
+/*          Nœud de l’AVL (index)          */
+/*/////////////////////////////////////////*/
 
 /* avl.h */
 
 #ifndef AVL_H
 #define AVL_H
 
-typedef struct AVLNode {
-    char *key;                  // id acteur aval
-    TreeNode *tree_node;        // pointeur vers arbre normal
-    int height;
-    struct AVLNode *left;
-    struct AVLNode *right;
-} AVLNode;
+#include "arbre.h"
 
-AVLNode *avl_insert(AVLNode *root, const char *key, TreeNode *tree_node);
-TreeNode *avl_find(AVLNode *root, const char *key);
+typedef struct NoeudAVL {
+    char *identifiant;          // Identifiant acteur aval
+    NoeudArbre *noeud_arbre;    // Pointeur vers l’arbre normal
+    int hauteur;
+    struct NoeudAVL *gauche;
+    struct NoeudAVL *droite;
+} NoeudAVL;
+
+NoeudAVL *avl_inserer(NoeudAVL *racine, const char *id, NoeudArbre *noeud);
+NoeudArbre *avl_rechercher(NoeudAVL *racine, const char *id);
 
 #endif
 
-//////////////////////
+/*/////////////////////////////////////////*/
+/*           Création d’un nœud            */
+/*/////////////////////////////////////////*/ 
 
-TreeNode *new_node;
-if (is_source_to_factory) {
-    new_node = tree_node_create(volume, leak_percent);
+/*Le volume est :
+
+égal à la valeur du CSV si c’est une ligne source → usine
+
+égal à 0 sinon
+*/
+
+NoeudArbre *nouveau_noeud;
+
+if (ligne_source_usine) {
+    nouveau_noeud = creer_noeud_arbre(volume, fuite);
 } else {
-    new_node = tree_node_create(0.0, leak_percent);
+    nouveau_noeud = creer_noeud_arbre(0.0, fuite);
 }
 
+/*/////////////////////////////////////////*/
+/*         Traitement d’un tronçon         */
+/*/////////////////////////////////////////*/
 
-//////////////////////
+void traiter_troncon(NoeudAVL **avl, NoeudArbre *racine_fictive, const char *id_amont, const char *id_aval, double volume, double fuite)
+{
+    /* Recherche du parent dans l'AVL */
+    NoeudArbre *noeud_parent = avl_rechercher(*avl, id_amont);
 
+    /* Création du nœud enfant */
+    NoeudArbre *noeud_enfant = creer_noeud_arbre(volume, fuite);
 
-void process_line(
-    AVLNode **avl,
-    TreeNode *root,
-    const char *id_parent,
-    const char *id_child,
-    double volume,
-    double leak
-) {
-    // 1️⃣ Recherche du parent dans l’AVL
-    TreeNode *parent_node = avl_find(*avl, id_parent);
-
-    // 2️⃣ Création du nœud enfant
-    TreeNode *child_node = tree_node_create(volume, leak);
-
-    // 3️⃣ Placement dans l’arbre normal
-    if (parent_node) {
-        tree_node_add_child(parent_node, child_node);
+    /* Placement dans l'arbre normal */
+    if (noeud_parent != NULL) {
+        ajouter_enfant(noeud_parent, noeud_enfant);
     } else {
-        // parent inconnu → on accroche au nœud racine fictif
-        tree_node_add_child(root, child_node);
+        /* Parent inconnu → accroché à la racine fictive */
+        ajouter_enfant(racine_fictive, noeud_enfant);
     }
 
-    // 4️⃣ Ajout dans l’AVL (clé = acteur aval)
-    *avl = avl_insert(*avl, id_child, child_node);
+    /* Insertion dans l'AVL (clé = acteur aval) */
+    *avl = avl_inserer(*avl, id_aval, noeud_enfant);
 }
 
-////////////////////////////
+/*/////////////////////////////////////////*/
+/*      Détection ligne source → usine     */
+/*/////////////////////////////////////////*/
 
-int is_source_to_factory(char **cols) {
-    return strstr(cols[1], "Spring") != NULL;
+int est_ligne_source_usine(char **colonnes) {
+    return strstr(colonnes[1], "Spring") != NULL;
 }
 
-////////////////////////////
+/*/////////////////////////////////////////*/
+/*        Traitement des lignes CSV        */
+/*/////////////////////////////////////////*/
 
-if (is_source_to_factory(cols)) {
-    // SOURCE → USINE
-    if (strcmp(cols[2], usine_id) == 0) {
-        process_line(
+if (est_ligne_source_usine(colonnes)) {
+    /* SOURCE → USINE */
+    if (strcmp(colonnes[2], identifiant_usine) == 0) {
+        traiter_troncon(
             &avl,
-            root,
-            cols[1],      // parent = source
-            cols[2],      // enfant = usine
-            atof(cols[3]),
-            atof(cols[4])
+            racine,
+            colonnes[1],           // acteur amont (source)
+            colonnes[2],           // acteur aval (usine)
+            atof(colonnes[3]),
+            atof(colonnes[4])
         );
     }
 } else {
-    // AUTRES TRONÇONS
-    if (strcmp(cols[0], usine_id) == 0) {
-        process_line(
+    /* AUTRES TRONÇONS */
+    if (strcmp(colonnes[0], identifiant_usine) == 0) {
+        traiter_troncon(
             &avl,
-            root,
-            cols[1],      // acteur amont
-            cols[2],      // acteur aval
+            racine,
+            colonnes[1],           // acteur amont
+            colonnes[2],           // acteur aval
             0.0,
-            atof(cols[4])
+            atof(colonnes[4])
         );
     }
 }
 
-////////////////////////////////
 
-TreeNode *root = tree_node_create(0.0, 0.0);
+/*/////////////////////////////////////////*/
+/*        Racine fictive obligatoire       */
+/*/////////////////////////////////////////*/
 
-//////////////////////////////
+NoeudArbre *racine = creer_noeud_arbre(0.0, 0.0);
 
-double compute_losses(TreeNode *node, double incoming_volume);
+/*//////////////////////////////////////////////////*/
+/*     Parcours récursif pour calculer les pertes   */
+/*//////////////////////////////////////////////////*/
 
-///////////////////////////
+double calculer_fuites(NoeudArbre *noeud, double volume_entrant);
+
+////////////////
 
 
