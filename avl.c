@@ -2,7 +2,7 @@
 #include <string.h>
 #include "avl.h"
 
-static int hauteur(AVL *n) {
+int hauteur(AVL *n) {
     if (n != NULL) {
         return n->hauteur;
     }
@@ -11,7 +11,7 @@ static int hauteur(AVL *n) {
     }
 }
 
-static int max(int a, int b) {
+int max(int a, int b) {
     if (a > b) {
         return a;
     }
@@ -20,7 +20,7 @@ static int max(int a, int b) {
     }
 }
 
-static char *dupliquer_chaine(char *a) {
+char *dupliquer_chaine(char *a) {
     if (a == NULL) {
         return NULL;
     }
@@ -42,7 +42,7 @@ static char *dupliquer_chaine(char *a) {
     return copie;
 }
 
-static AVL *nouveau_noeud(char *cle, Usine *data) {
+AVL *nouveau_noeud(char *cle, Usine *data) {
     AVL *n = malloc(sizeof(AVL));
     if (n == NULL) {
         return NULL;
@@ -57,7 +57,7 @@ static AVL *nouveau_noeud(char *cle, Usine *data) {
     return n;
 }
 
-static AVL *rotation_droite(AVL *y) {
+AVL *rotation_droite(AVL *y) {
     AVL *x = y->gauche;
     AVL *t = x->droite;
 
@@ -70,7 +70,7 @@ static AVL *rotation_droite(AVL *y) {
     return x;
 }
 
-static AVL *rotation_gauche(AVL *x) {
+AVL *rotation_gauche(AVL *x) {
     AVL *y = x->droite;
     AVL *t = y->gauche;
 
@@ -83,7 +83,7 @@ static AVL *rotation_gauche(AVL *x) {
     return y;
 }
 
-static int balance(AVL *n) {
+int balance(AVL *n) {
     if (n == NULL) {
         return 0;
     }
