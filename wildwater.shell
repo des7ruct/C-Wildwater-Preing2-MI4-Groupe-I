@@ -119,7 +119,7 @@ if [ ! -x 'projet_final.c' ] ; then
 fi
 
 if [ $# -ne 0 ] ; then
-  echo 'Erreur : le script shell ne prend pas d'argument'
+  echo 'Erreur : le script shell ne prend pas d argument'
   exit 1
 fi
 
