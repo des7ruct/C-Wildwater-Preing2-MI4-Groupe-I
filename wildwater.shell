@@ -68,7 +68,7 @@ histogrammeSrc() {
 
 histogrammeReal() {
   if [ ! -r "$1" ] ; then
-    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n'y a pas accès en lecture'
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
 
   else 
