@@ -106,7 +106,7 @@ leaks() {
 
 
 histogrammeImages() {
-  
+  return 0
 }
 
 
