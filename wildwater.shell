@@ -1,0 +1,151 @@
+#!/bin/bash
+
+
+histogramme() {
+  if [ ! -r "$2" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+    exit 1
+    
+  elif [ "$1" -eq 'max' ] ; then
+    histogrammeMax "$2"
+
+  elif [ "$1" -eq 'src' ] ; then
+    histogrammeSrc "$2"
+
+  elif [ "$1" -eq 'real' ] ; then
+    histogrammeReal "$2"
+  
+  else
+    echo 'Erreur : les instructions à faire exécuter sont incorrectes'
+    exit 1
+  fi
+
+  return 0
+}
+
+
+histogrammeMax() {
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+    exit 1
+
+  else 
+    retour=$(./projet_final 'histo' 'max' "$1")
+
+    if [ "$retour" -ne '0' ] ; then
+      echo 'Erreur : code retour de la partie histogramme du programme C non égal à 0'
+      exit 1
+
+    else
+      histogrammeImages 'max'
+    fi
+  fi
+
+  return 0
+}
+
+
+histogrammeSrc() {
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+    exit 1
+    
+  else 
+    retour=$(./projet_final 'histo' 'src' "$1")
+
+    if [ "$retour" -ne '0' ] ; then
+      echo 'Erreur : code retour de la partie histogramme du programme C non égal à 0'
+      exit 1
+
+    else
+      histogrammeImages 'src'
+    fi
+  fi
+
+  return 0
+}
+
+
+histogrammeReal() {
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n'y a pas accès en lecture'
+    exit 1
+
+  else 
+    retour=$(./projet_final 'histo' 'real' "$1")
+
+    if [ "$retour" -ne '0' ] ; then
+      echo 'Erreur : code retour de la partie histogramme du programme C non égal à 0'
+      exit 1
+
+    else
+      histogrammeImages 'real'
+    fi
+  fi
+
+  return 0
+}
+
+
+leaks() {
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+    exit 1
+
+  else 
+    retour=$(./projet_final 'leaks' "$1" "$2")
+
+    if [ "$retour" -ne '0' ] ; then
+      echo 'Erreur : code retour de la partie fuite du programme C non égal à 0'
+      exit 1
+    fi
+  fi
+
+  return 0
+}
+
+
+histogrammeImages() {
+  
+}
+
+
+if [ ! -x 'projet_final.c' ] ; then
+  $(gcc -o projet_final main.c avl.c usine.c histogramme.c outils.c leaks.c -Wall -Wextra)
+  if [ ! -x 'projet_final.c' ] ; then
+    echo 'Erreur : les fichiers pour la compilation du programme C ne sont pas tous présents'
+    exit 1
+  fi
+fi
+
+if [ $# -ne 0 ] ; then
+  echo 'Erreur : le script shell ne prend pas d'argument'
+  exit 1
+fi
+
+echo 'Saisissez le chemin d accès du fichier :'
+read chemin
+
+if [ ! -r "$chemin" ] ; then
+  echo  'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+  exit 1
+fi
+
+echo 'Saisissez les instructions à faire exécuter :'
+read principal secondaire tertiaire
+
+if [ -n "$tertiaire" ] ; then
+  echo  'Erreur : les instructions à faire exécuter sont trop longues'
+  exit 1
+fi
+
+if [ "$principal" -eq 'histo' ] ; then
+  histogramme secondaire "$chemin"
+
+elif [ "$principal" -eq 'leaks' ] ; then
+  leaks secondaire "$chemin"
+
+else
+  echo 'Erreur : les instructions à faire exécuter sont incorrectes'
+  exit 1
+fi
