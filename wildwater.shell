@@ -116,6 +116,8 @@ leaks() {
 
 histogrammeImages() {
   # Fonction générant des images PNGs des 50 plus petites et des 10 plus grandes usines
+  if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
+  fi
   return 0
 }
 
