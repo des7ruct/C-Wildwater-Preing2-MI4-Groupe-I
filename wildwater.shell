@@ -39,8 +39,8 @@ histogrammeMax() {
       exit 1
 
     else
-      ImageGrandes 'vol_max.dat'
-      ImagePetites 'vol_max.dat'
+      ImageGrandes 'vol_max.dat' 'vol_max.png'
+      ImagePetites 'vol_max.dat' 'vol_max.png'
     fi
   fi
 
@@ -63,8 +63,8 @@ histogrammeSrc() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        ImageGrandes 'vol_src.dat'
-        ImagePetites 'vol_src.dat'
+        ImageGrandes 'vol_src.dat' 'vol_src.png'
+        ImagePetites 'vol_src.dat' 'vol_src.png'
       fi
     fi
   fi
@@ -88,8 +88,8 @@ histogrammeReal() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        ImageGrandes 'vol_real.dat'
-        ImagePetites 'vol_real.dat'
+        ImageGrandes 'vol_real.dat' 'vol_real.png'
+        ImagePetites 'vol_real.dat' 'vol_real.png'
       fi
     fi
   fi
@@ -126,7 +126,9 @@ imageGrandes() {
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
-  
+  gnuplot <<EOF
+  set terminal png font 'Times new roman'
+  set output "$2"
 
   return 0
 }
@@ -137,7 +139,9 @@ imagePetites() {
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
-  
+  gnuplot <<EOF
+  set terminal png font 'Times new roman'
+  set output "$2"
 
   return 0
 }
