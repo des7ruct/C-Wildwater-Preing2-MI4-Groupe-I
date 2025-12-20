@@ -7,13 +7,13 @@ imageGrandes() {
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
-  gnuplot <<- EOF
+  /usr/bin/gnuplot <<__EOF
     set terminal png font 'Times new roman'
     set xlabel 'IDs des usines'
     set ylabel 'Volume (M.m3)'
     set title 'Histogramme des 10 plus grandes usines' 
     set output ".png"
-  EOF
+  __EOF
 
   return 0
 }
