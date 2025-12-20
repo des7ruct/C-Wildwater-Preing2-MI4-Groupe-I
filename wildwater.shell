@@ -2,6 +2,7 @@
 
 
 histogramme() {
+  # Fonction appelant une autre fonction correspondante à l'argument secondaire de l'histogramme
   if [ ! -r "$2" ] ; then
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
@@ -25,6 +26,7 @@ histogramme() {
 
 
 histogrammeMax() {
+  # Fonction appelant la partie du programme C devant exécuter la commande "histo max"
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
@@ -46,6 +48,7 @@ histogrammeMax() {
 
 
 histogrammeSrc() {
+  # Fonction appelant la partie du programme C devant exécuter la commande "histo src"
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
@@ -67,6 +70,7 @@ histogrammeSrc() {
 
 
 histogrammeReal() {
+  # Fonction appelant la partie du programme C devant exécuter la commande "histo real"
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
@@ -88,6 +92,7 @@ histogrammeReal() {
 
 
 leaks() {
+  # Fonction appelant la partie du programme C devant exécuter la commande "leaks IDusine"
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
@@ -110,10 +115,11 @@ leaks() {
 
 
 histogrammeImages() {
+  # Fonction générant des images PNGs des 50 plus petites et des 10 plus grandes usines
   return 0
 }
 
-
+# Recompilation du programme C si celui si n'existe pas
 if [ ! -x 'projet_final.c' ] ; then
   $(gcc -o projet_final main.c avl.c usine.c histogramme.c outils.c leaks.c -Wall -Wextra)
   if [ ! -x 'projet_final.c' ] ; then
@@ -122,16 +128,19 @@ if [ ! -x 'projet_final.c' ] ; then
   fi
 fi
 
+# Vérification du nombre d'arguments passés dans le script
 if [ $# -ne 3 ] ; then
   echo 'Erreur : le script shell prend 3 arguments'
   exit 1
 fi
 
+# Vérification du premier argument (le fichier existe et est accessible en lecture)
 if [ ! -r "$1" ] ; then
   echo  'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
   exit 1
 fi
 
+# Vérification du second argument et appel de la fonction correspondante
 if [ "$2" -eq 'histo' ] ; then
   histogramme "$3" "$1"
 
@@ -143,4 +152,5 @@ else
   exit 1
 fi
 
+# S'affiche uniquement si le script se termine sans erreur
 echo 'opération réussie'
