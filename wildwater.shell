@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-imageGrandes() {
-  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
+imageMax() {
+  # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
@@ -11,8 +11,18 @@ imageGrandes() {
 }
 
 
-imagePetites() {
-  # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
+imageSrc() {
+  # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
+  fi
+
+  return 0
+}
+
+
+imageReal() {
+  # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
   if [ ! -r "$1" ] ; then
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
