@@ -115,10 +115,20 @@ leaks() {
 
 
 histogrammeImages() {
-  # Fonction générant des images PNGs des 50 plus petites et des 10 plus grandes usines
+  # Fonction appelant des fonctions générant des images PNGs des 50 plus petites et 10 plus grandes usines
   if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
+    imageGrandes
+    imagePetites
   fi
   return 0
+}
+
+imageGrandes() {
+  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
+}
+
+imagePetites() {
+  # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
 }
 
 # Recompilation du programme C si celui si n'existe pas
