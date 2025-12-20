@@ -7,12 +7,12 @@ imageGrandes() {
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
-  gnuplot << EOF
+  gnuplot -persist <<-EOFMarker
   set terminal png font 'Times new roman'
   set title 'Histogramme des 10 plus grandes usines'
   set xlabel 'IDs des usines'
   set ylabel 'Volume (M.m3)'
-  EOF
+  EOFMarker
 
   return 0
 }
@@ -23,12 +23,12 @@ imagePetites() {
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
-  gnuplot <<EOF
+  gnuplot -persist <<-EOFMarker
   set terminal png font 'Times new roman'
   set title 'Histogramme des 50 plus petites usines'
   set xlabel 'IDs des usines'
   set ylabel 'Volume (M.m3)'
-  EOF
+  EOFMarker
 
   return 0
 }
