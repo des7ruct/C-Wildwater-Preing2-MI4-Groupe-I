@@ -39,8 +39,8 @@ histogrammeMax() {
       exit 1
 
     else
-      ImageGrandes 'max'
-      ImagePetites 'max'
+      ImageGrandes 'vol_max.dat'
+      ImagePetites 'vol_max.dat'
     fi
   fi
 
@@ -62,8 +62,10 @@ histogrammeSrc() {
       exit 1
 
     else
-      ImageGrandes 'src'
-      ImagePetites 'src'
+      if [ -r 'vol_max.dat' ] ; then
+        ImageGrandes 'vol_src.dat'
+        ImagePetites 'vol_src.dat'
+      fi
     fi
   fi
 
@@ -85,8 +87,10 @@ histogrammeReal() {
       exit 1
 
     else
-      ImageGrandes 'real'
-      ImagePetites 'real'
+      if [ -r 'vol_max.dat' ] ; then
+        ImageGrandes 'vol_real.dat'
+        ImagePetites 'vol_real.dat'
+      fi
     fi
   fi
 
@@ -118,20 +122,22 @@ leaks() {
 
 imageGrandes() {
   # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
-  if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
-    imageGrandes
-    imagePetites
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
+
+  
 
   return 0
 }
 
 imagePetites() {
   # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
-  if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
-    imageGrandes
-    imagePetites
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
+
+  
 
   return 0
 }
