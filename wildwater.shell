@@ -39,7 +39,8 @@ histogrammeMax() {
       exit 1
 
     else
-      histogrammeImages 'max'
+      ImageGrandes 'max'
+      ImagePetites 'max'
     fi
   fi
 
@@ -61,7 +62,8 @@ histogrammeSrc() {
       exit 1
 
     else
-      histogrammeImages 'src'
+      ImageGrandes 'src'
+      ImagePetites 'src'
     fi
   fi
 
@@ -83,7 +85,8 @@ histogrammeReal() {
       exit 1
 
     else
-      histogrammeImages 'real'
+      ImageGrandes 'real'
+      ImagePetites 'real'
     fi
   fi
 
@@ -113,22 +116,24 @@ leaks() {
   return 0
 }
 
-
-histogrammeImages() {
-  # Fonction appelant des fonctions générant des images PNGs des 50 plus petites et 10 plus grandes usines
+imageGrandes() {
+  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
   if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
     imageGrandes
     imagePetites
   fi
-  return 0
-}
 
-imageGrandes() {
-  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
+  return 0
 }
 
 imagePetites() {
   # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
+  if [ -r 'vol_max.dat' ] && [ -r 'vol_src.dat' ] && [ -r 'vol_real.dat' ] ; then
+    imageGrandes
+    imagePetites
+  fi
+
+  return 0
 }
 
 # Recompilation du programme C si celui si n'existe pas
