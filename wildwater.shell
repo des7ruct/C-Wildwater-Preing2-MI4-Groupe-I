@@ -92,6 +92,10 @@ leaks() {
     echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
     exit 1
 
+  elif [ -z "$2" ] ; then
+    echo 'Erreur : l identifiant de l usine pour les fuites est vide'
+    exit 1
+
   else 
     retour=$(./projet_final 'leaks' "$1" "$2")
 
@@ -138,3 +142,5 @@ else
   echo 'Erreur : les instructions à faire exécuter sont incorrectes'
   exit 1
 fi
+
+echo 'opération réussie'
