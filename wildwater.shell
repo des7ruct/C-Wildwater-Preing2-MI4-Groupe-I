@@ -118,32 +118,21 @@ if [ ! -x 'projet_final.c' ] ; then
   fi
 fi
 
-if [ $# -ne 0 ] ; then
-  echo 'Erreur : le script shell ne prend pas d argument'
+if [ $# -ne 3 ] ; then
+  echo 'Erreur : le script shell prend 3 arguments'
   exit 1
 fi
 
-echo 'Saisissez le chemin d accès du fichier :'
-read chemin
-
-if [ ! -r "$chemin" ] ; then
+if [ ! -r "$1" ] ; then
   echo  'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
   exit 1
 fi
 
-echo 'Saisissez les instructions à faire exécuter :'
-read principal secondaire tertiaire
+if [ "$2" -eq 'histo' ] ; then
+  histogramme "$3" "$1"
 
-if [ -n "$tertiaire" ] ; then
-  echo  'Erreur : les instructions à faire exécuter sont trop longues'
-  exit 1
-fi
-
-if [ "$principal" -eq 'histo' ] ; then
-  histogramme secondaire "$chemin"
-
-elif [ "$principal" -eq 'leaks' ] ; then
-  leaks secondaire "$chemin"
+elif [ "$2" -eq 'leaks' ] ; then
+  leaks "$3" "$1"
 
 else
   echo 'Erreur : les instructions à faire exécuter sont incorrectes'
