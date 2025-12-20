@@ -1,25 +1,34 @@
 #!/bin/bash
 
 
-histogramme() {
-  # Fonction appelant une autre fonction correspondante à l'argument secondaire de l'histogramme
-  if [ ! -r "$2" ] ; then
-    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
-    exit 1
-    
-  elif [ "$1" -eq 'max' ] ; then
-    histogrammeMax "$2"
-
-  elif [ "$1" -eq 'src' ] ; then
-    histogrammeSrc "$2"
-
-  elif [ "$1" -eq 'real' ] ; then
-    histogrammeReal "$2"
-  
-  else
-    echo 'Erreur : les instructions à faire exécuter sont incorrectes'
-    exit 1
+imageGrandes() {
+  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
+
+  gnuplot <<EOF
+  set terminal png font 'Times new roman'
+  set title 'Histogramme des 10 plus grandes usines'
+  set xlabel 'IDs des usines'
+  set ylabel 'Volume (M.m3)'
+  EOF
+
+  return 0
+}
+
+imagePetites() {
+  # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
+  if [ ! -r "$1" ] ; then
+    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
+  fi
+
+  gnuplot <<EOF
+  set terminal png font 'Times new roman'
+  set title 'Histogramme des 50 plus petites usines'
+  set xlabel 'IDs des usines'
+  set ylabel 'Volume (M.m3)'
+  EOF
 
   return 0
 }
@@ -39,8 +48,8 @@ histogrammeMax() {
       exit 1
 
     else
-      ImageGrandes 'vol_max.dat' 'vol_max.png'
-      ImagePetites 'vol_max.dat' 'vol_max.png'
+      ImageGrandes 'vol_max.dat'
+      ImagePetites 'vol_max.dat'
     fi
   fi
 
@@ -63,8 +72,8 @@ histogrammeSrc() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        ImageGrandes 'vol_src.dat' 'vol_src.png'
-        ImagePetites 'vol_src.dat' 'vol_src.png'
+        ImageGrandes 'vol_src.dat'
+        ImagePetites 'vol_src.dat'
       fi
     fi
   fi
@@ -88,10 +97,34 @@ histogrammeReal() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        ImageGrandes 'vol_real.dat' 'vol_real.png'
-        ImagePetites 'vol_real.dat' 'vol_real.png'
+        ImageGrandes 'vol_real.dat'
+        ImagePetites 'vol_real.dat'
       fi
     fi
+  fi
+
+  return 0
+}
+
+
+histogramme() {
+  # Fonction appelant une autre fonction correspondante à l'argument secondaire de l'histogramme
+  if [ ! -r "$2" ] ; then
+    echo 'Erreur : le chemin d accès au fichier est incorrect ou le script n y a pas accès en lecture'
+    exit 1
+    
+  elif [ "$1" -eq 'max' ] ; then
+    histogrammeMax "$2"
+
+  elif [ "$1" -eq 'src' ] ; then
+    histogrammeSrc "$2"
+
+  elif [ "$1" -eq 'real' ] ; then
+    histogrammeReal "$2"
+  
+  else
+    echo 'Erreur : les instructions à faire exécuter sont incorrectes'
+    exit 1
   fi
 
   return 0
@@ -120,31 +153,6 @@ leaks() {
   return 0
 }
 
-imageGrandes() {
-  # Fonction générant l'image PNG de l'histogramme des 10 plus grandes usines suivant leur capacité max
-  if [ ! -r "$1" ] ; then
-    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
-  fi
-
-  gnuplot <<EOF
-  set terminal png font 'Times new roman'
-  set output "$2"
-
-  return 0
-}
-
-imagePetites() {
-  # Fonction générant l'image PNG de l'histogramme des 50 plus petites usines suivant leur capacité max
-  if [ ! -r "$1" ] ; then
-    echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
-  fi
-
-  gnuplot <<EOF
-  set terminal png font 'Times new roman'
-  set output "$2"
-
-  return 0
-}
 
 # Recompilation du programme C si celui si n'existe pas
 if [ ! -x 'projet_final.c' ] ; then
