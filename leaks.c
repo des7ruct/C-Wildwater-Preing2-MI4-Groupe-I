@@ -327,7 +327,7 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
             cols[i] = trim(cols[i]);
         }
 
-        if (valeur_absente(cols[1]) || valeur_absente(cols[2])) {
+        if (nb < 5 || valeur_absente(cols[1]) || valeur_absente(cols[2])) {
             continue;
         }
 
@@ -349,7 +349,19 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
 
     fclose(f);
 
+    /* ================= CALCUL DES FUITES ================= */
+
     float fuites = calculer_fuites(racine);
+
+    /* ================= SAUVEGARDE AUTOMATIQUE ================= */
+
+    FILE *out = fopen("leaks.dat", "a");
+    if (out != NULL) {
+        fprintf(out, "%s;%.2f\n", id_usine, fuites);
+        fclose(out);
+    }
+
+    /* ================= LIBÉRATIONS ================= */
 
     liberer_troncon(racine);
     liberer_avl_troncon(avl_troncons);
