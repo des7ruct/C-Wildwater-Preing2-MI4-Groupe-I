@@ -41,11 +41,11 @@ int main(int argc, char *argv[]) {
         float fuites = traiter_leaks(fichier_csv, id_usine);
 
         if (fuites < 0.0) {
-            printf("Erreur lors du calcul des fuites.\n");
-            return 1;
-        }
+        printf("%.2f\n", fuites);
+        return 0;
+}
 
-        printf("Fuites totales pour %s : %.2f\n", id_usine, fuites);
+printf("Fuites totales pour %s : %.2f\n", id_usine, fuites);
         return 0;
     }
 
