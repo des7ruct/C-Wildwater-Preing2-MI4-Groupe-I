@@ -1,9 +1,9 @@
 #!/bin/bash
 
 
-imageMax() {
+imagesMax() {
   # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
-  if [ ! -r "$1" ] ; then
+  if [ ! -r 'vol_max.dat' ] ; then
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
@@ -11,9 +11,9 @@ imageMax() {
 }
 
 
-imageSrc() {
+imagesSrc() {
   # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
-  if [ ! -r "$1" ] ; then
+  if [ ! -r 'vol_src.dat' ] ; then
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
@@ -21,9 +21,9 @@ imageSrc() {
 }
 
 
-imageReal() {
+imagesReal() {
   # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
-  if [ ! -r "$1" ] ; then
+  if [ ! -r 'vol_real.dat' ] ; then
     echo 'Erreur : le fichier histogramme généré par le programme C n existe pas ou n est pas lisible'
   fi
 
@@ -45,8 +45,7 @@ histogrammeMax() {
       exit 1
 
     else
-      imageGrandes 'vol_max.dat'
-      imagePetites 'vol_max.dat'
+      imagesMax
     fi
   fi
 
@@ -69,8 +68,7 @@ histogrammeSrc() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        imageGrandes 'vol_src.dat'
-        imagePetites 'vol_src.dat'
+        imagesSrc
       fi
     fi
   fi
@@ -94,8 +92,7 @@ histogrammeReal() {
 
     else
       if [ -r 'vol_max.dat' ] ; then
-        imageGrandes 'vol_real.dat'
-        imagePetites 'vol_real.dat'
+        imagesReal
       fi
     fi
   fi
