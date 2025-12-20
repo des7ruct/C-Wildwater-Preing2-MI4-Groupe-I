@@ -8,10 +8,10 @@ imageGrandes() {
   fi
 
   gnuplot -persist <<-EOFMarker
-  set terminal png font 'Times new roman'
-  set title 'Histogramme des 10 plus grandes usines'
-  set xlabel 'IDs des usines'
-  set ylabel 'Volume (M.m3)'
+    set terminal png font 'Times new roman'
+    set title 'Histogramme des 10 plus grandes usines'
+    set xlabel 'IDs des usines'
+    set ylabel 'Volume (M.m3)'
   EOFMarker
 
   return 0
