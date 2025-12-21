@@ -1,5 +1,13 @@
 #include <string.h>
+#include <time.h>
 #include "outils.h"
+
+
+long temps_en_millisecondes(struct timespec debut, struct timespec fin) {
+    long secondes = fin.tv_sec - debut.tv_sec;
+    long nanosecondes = fin.tv_nsec - debut.tv_nsec;
+    return secondes * 1000 + nanosecondes / 1000000;
+}
 
 int valeur_absente(char *a) {
     if (a == NULL) {
