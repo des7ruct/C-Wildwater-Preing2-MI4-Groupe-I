@@ -6,6 +6,14 @@
 #include "usine.h"
 #include "histogramme.h"
 
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*   traiter_histogramme lit le fichier CSV ligne par ligne, construit un AVL d’usines, calcule pour chaque usine :     */
+/*     - sa capacité maximale (vol_max)                                                                                 */
+/*     - le volume capté par ses sources (vol_src)                                                                      */
+/*     - le volume réellement traité (vol_real)                                                                         */
+/*   écrit un fichier .dat correspondant au mode demandé et retourne le bon un code d’erreur                            */
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 int traiter_histogramme(char *fichier_csv, char *mode) {
     FILE *fichier = fopen(fichier_csv, "r");
     if (fichier == NULL) {
