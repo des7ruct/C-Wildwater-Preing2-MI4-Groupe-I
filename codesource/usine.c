@@ -1,6 +1,13 @@
 #include <stdlib.h>
 #include "usine.h"
 
+/*/////////////////////////////////////////////////////////////////////////*/
+/*     usine.c possède 2 fonction : la première chaine_vers_int            */
+/*     permettant de passer de chaine à entier (volume d'eau) et la        */
+/*     deuxieme permettant de passer de chaine à un nombre à vigule        */
+/*     (pourcentage de fuite).                                             */
+/*/////////////////////////////////////////////////////////////////////////*/
+
 int chaine_vers_int(char *s) {
     int r = 0;
 
