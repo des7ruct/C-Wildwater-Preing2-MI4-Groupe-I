@@ -196,6 +196,15 @@ if [ ! -x 'projet_final' ] ; then
   fi
 
   mv "projet_final" ../
+
+  # Précaution pour enlever les fichiers du makefile
+  rm -f avl.o
+  rm -f histogramme.o
+  rm -f leaks.o
+  rm -f main.o
+  rm -f outils.o
+  rm -f usine.o
+
   cd ..
   echo "Recompilation réussie"
 fi
@@ -219,14 +228,6 @@ case $2 in
   *) echo "Erreur : les instructions à faire exécuter sont incorrectes"
   exit 1 ;;
 esac
-
-# Précaution pour enlever les fichiers du makefile
-rm -f avl.o
-rm -f histogramme.o
-rm -f leaks.o
-rm -f main.o
-rm -f outils.o
-rm -f usine.o
 
 # Déplace les fichiers de données créés dans un dossier
 if [ ! -e "donnees" ] || [ ! -d "donnees" ] ; then
