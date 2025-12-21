@@ -2,6 +2,10 @@
 #include <string.h>
 #include "avl.h"
 
+/*/////////////////////////////////////////////////////////*/
+/*             fonctions de base pour les AVL              */
+/*/////////////////////////////////////////////////////////*/
+
 int hauteur(AVL *n) {
     if (n != NULL) {
         return n->hauteur;
