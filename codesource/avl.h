@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "usine.h"
 
+// déclaration de la structure AVL ainsi que de différentes fonctions
+
 typedef struct AVL {
     char *cle;
     Usine *data;
