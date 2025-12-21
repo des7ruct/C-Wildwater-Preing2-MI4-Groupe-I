@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+// déclaration de différentes fonctions
 
 int valeur_absente(char *a);
 char *trim(char *s);
