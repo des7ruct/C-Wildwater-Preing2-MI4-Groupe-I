@@ -351,7 +351,7 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
 
     /* ================= CALCUL DES FUITES ================= */
 
-    float fuites = calculer_fuites(racine) / fuites;
+    float fuites = calculer_fuites(racine) / 1000;
 
     /* ================= SAUVEGARDE AUTOMATIQUE ================= */
 
@@ -369,6 +369,7 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
 
     return fuites;
 }
+
 
 
 
