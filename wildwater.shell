@@ -252,8 +252,4 @@ if [ -e "vol_max.dat" ] ; then
   mv vol_max.dat donnees/
 fi
 
-if [ -e "leaks.dat" ] ; then
-  mv leaks.dat donnees/
-fi
-
 echo "Opération réussie"
