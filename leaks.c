@@ -5,7 +5,12 @@
 #include "leaks.h"
 #include "outils.h"
 
-
+*//////////////////////////////////////////////////////////////////////////////////////////////////////////*
+*/    Pour une usine id_usine le programme charge les usines et calcule leurs volumes,                    /*
+*/      il vérifie que l’usine existe, il construit un graphe aval (arbre à enfants multiples),           /*
+*/      il utilise un AVL pour retrouver chaque tronçon rapidement, répartit les volumes équitablement,   /*
+*/      calcule récursivement les fuites, enregistre le résultat et libère toute la mémoire               /*
+*//////////////////////////////////////////////////////////////////////////////////////////////////////////*
 
 AVL *charger_usines(char *fichier_csv) {
     FILE *fichier = fopen(fichier_csv, "r");
@@ -369,3 +374,4 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
 
     return fuites;
 }
+
