@@ -54,7 +54,7 @@ int traiter_histogramme(char *fichier_csv, char *mode) {
                 usines = insert_AVL(usines, u->id, u);
             }
 
-            u->vol_max = chaine_vers_int(colonnes[3]);
+            u->vol_max = chaine_vers_int(colonnes[3]) / 1000;
         }
         else if (!valeur_absente(colonnes[1]) && !valeur_absente(colonnes[2]) && !valeur_absente(colonnes[3]) && !valeur_absente(colonnes[4])) {
             Usine *u = avl_recherche(usines, colonnes[2]);
