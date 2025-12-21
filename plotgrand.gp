@@ -7,7 +7,7 @@ unset key
 set title "10 plus grandes usines" font "Arial,32"
 set xlabel "IDs des usines" font "Arial,22"
 set ylabel "Volume(M.m3)" font "Arial,22" offset 0,-1
-set xtics font "Arial,10" format "%s" rotate by -90
+set xtics font "Arial,9" format "%s" rotate by -90
 set grid xtics lt 0 lw 1 lc rgb "#DDDDDD"
 
 set style line 1 lc rgb '#2E86C1' lw 2
