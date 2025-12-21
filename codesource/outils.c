@@ -1,7 +1,11 @@
 #include <string.h>
 #include "outils.h"
 
-
+/*/////////////////////////////////////////////////////////////////*/
+/*    Ce fichier est composé de fonctions permettant de détecter   */
+/*    les valeurs absentes (-), de nettoyer les chaînes lues       */
+/*    dans le CSV et de découper une ligne CSV                     */
+/*/////////////////////////////////////////////////////////////////*/
 
 int valeur_absente(char *a) {
     if (a == NULL) {
