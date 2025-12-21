@@ -209,6 +209,12 @@ if [ ! -x 'projet_final' ] ; then
   echo "Recompilation réussie"
 fi
 
+# Vérification des scripts gnuplots
+if [ ! -e "plotgrand.gp" ] || [ ! -e "plotpetit.gp" ] ; then
+  echo "Erreur : les script gnuplots sont absents"
+  exit 1
+fi
+
 # Vérification du nombre d'arguments passés dans le script
 if [ $# -ne 3 ] ; then
   echo "Erreur : le script shell prend 3 arguments"
