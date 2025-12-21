@@ -74,7 +74,7 @@ int traiter_histogramme(char *fichier_csv, char *mode) {
                 usines = insert_AVL(usines, u->id, u);
             }
 
-            int volume = chaine_vers_int(colonnes[3]);
+            int volume = chaine_vers_int(colonnes[3]) / 1000;
             float fuite = chaine_vers_float(colonnes[4]);
 
             u->vol_src += volume;
