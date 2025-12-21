@@ -11,7 +11,7 @@
 /*     - sa capacité maximale (vol_max)                                                                                 */
 /*     - le volume capté par ses sources (vol_src)                                                                      */
 /*     - le volume réellement traité (vol_real)                                                                         */
-/*   écrit un fichier .dat correspondant au mode demandé et retourne le bon un code d’erreur                            */
+/*   écrit un fichier .dat correspondant au mode demandé et retourne le bon code d’erreur                            */
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 int traiter_histogramme(char *fichier_csv, char *mode) {
