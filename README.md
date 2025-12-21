@@ -10,7 +10,7 @@ bash wildwater.shell {chemin du fichier CSV de données} histo {max / src / real
 
 pour les fuites :
 
-bash wildwater.shell {chemin du fichier CSV de données} leaks {id d'une usine}
+bash wildwater.shell {chemin du fichier CSV de données} leaks {"id d'une usine"}
 
 
 si le chemin du fichier n'est pas détecté pour quelque raison que ce soit il suffit de mettre le fichier
