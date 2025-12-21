@@ -31,8 +31,7 @@ AVL *charger_usines(char *fichier_csv) {
         }
 
       
-        if (nb >= 4 &&
-            valeur_absente(cols[1]) == 0 && valeur_absente(cols[2]) == 1 && valeur_absente(cols[3]) == 0) {
+        if (nb >= 4 && valeur_absente(cols[1]) == 0 && valeur_absente(cols[2]) == 1 && valeur_absente(cols[3]) == 0) {
             
             Usine *u = avl_recherche(usines, cols[1]);
             
@@ -369,6 +368,7 @@ float traiter_leaks(char *fichier_csv, char *id_usine) {
 
     return fuites;
 }
+
 
 
 
