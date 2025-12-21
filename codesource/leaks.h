@@ -4,6 +4,8 @@
 #include "avl.h"
 #include "usine.h"
 
+// déclaration des structures Troncon et AVL_Troncon et déclaration de différentes fonctions
+
 /* ======================= TRONCON ======================= */
 
 typedef struct Troncon Troncon;
