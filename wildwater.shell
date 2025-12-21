@@ -140,7 +140,12 @@ leaks() {
 
 # Recompilation du programme C si celui si n'existe pas
 if [ ! -x 'projet_final' ] ; then
-  make
+  if [ -e "Makefile" ] ; then
+    make
+  else
+    echo "Erreur : le fichier Makefile n'est pas présent"
+    exit 1
+  fi
   if [ ! -x 'projet_final' ] ; then
     echo "Erreur : les fichiers pour la compilation du programme C ne sont pas tous présents"
     exit 1
@@ -159,7 +164,7 @@ if [ ! -r "$1" ] ; then
   exit 1
 fi
 
-# Vérification du second argument et appel de la fonction correspondante
+# Vérification que le second argument est égal à 'histo' ou 'leaks' et appel de la fonction correspondante
 case $2 in
   'histo') histogramme "$1" "$3" ;;
   'leaks') leaks "$1" "$3" ;;
