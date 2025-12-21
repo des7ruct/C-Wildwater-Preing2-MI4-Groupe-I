@@ -22,14 +22,9 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        struct timespec debut, fin;
-        clock_gettime(CLOCK_MONOTONIC, &debut);
+    
 
         int res = traiter_histogramme(fichier_csv, mode);
-
-        clock_gettime(CLOCK_MONOTONIC, &fin);
-        long duree_ms = temps_en_millisecondes(debut, fin);
-        printf("Temps d'exécution : %ld ms\n", duree_ms);
 
         if (res != 0) {
             printf("Erreur lors du traitement de l'histogramme (code %d)\n", res);
@@ -46,15 +41,10 @@ int main(int argc, char *argv[]) {
         char *fichier_csv = argv[2];
         char *id_usine = argv[3];
 
-        struct timespec debut, fin;
-        clock_gettime(CLOCK_MONOTONIC, &debut);
 
         float fuites = traiter_leaks(fichier_csv, id_usine);
 
-        clock_gettime(CLOCK_MONOTONIC, &fin);
-        long duree_ms = temps_en_millisecondes(debut, fin);
-        printf("Temps d'exécution : %ld ms\n", duree_ms);
-
+        
         if (fuites < 0.0) {
             printf("%.2f\n", fuites);
             return 0;
