@@ -16,6 +16,14 @@ images() {
     exit 1
   fi
 
+  # Ici, le fichier de données en argument est coupé par 'tail' afin de ne prendre ses données
+  # qu'à partir de la seconde ligne (pour passer la ligne du format des données)
+  # ces données sont triées par 'sort' par ordre numérique en fonction de la deuxième colonne
+  # et le résultat est inversé afin d'avoir les données en ordre décroissant
+  # ces données ainsi obtenues sont ensuite traitées par 'awk' afin de les mettres sous une
+  # forme traitable par gnuplot, les espaces présents dans l'id de l'usine sont enlevés
+  # les ';' séparants les deux colonnes sont remplacés par des espaces et les données
+  # finalement obtenues sont envoyées dans le fichier 'temp.dat'
   awk -F';' '{gsub(/ /, "", $1); printf "%s %d\n", $1, $2}' <(tail -n+2 "$donnees".dat | sort -t';' -k2,2nr) > temp.dat
 
   head -n 10 temp.dat > gtemp.dat
