@@ -11,7 +11,8 @@
 /*     - sa capacité maximale (vol_max)                                                                                 */
 /*     - le volume capté par ses sources (vol_src)                                                                      */
 /*     - le volume réellement traité (vol_real)                                                                         */
-/*   il va écrire un fichier .dat correspondant au mode demandé et retourne le bon code d’erreur                        */
+/*     il va écrire un fichier .dat correspondant au mode demandé et retourne le bon code d’erreur : 0 Succès,          */
+/*     1 CSV ne souvre pas, 2 et 3 malloc échoué, 4 mode invalide et 5 le fichier sortie ne s'ouvre pas                 */
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 int traiter_histogramme(char *fichier_csv, char *mode) {
