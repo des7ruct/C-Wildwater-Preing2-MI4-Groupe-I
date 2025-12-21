@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     double temps_cpu ;
     debut = clock() ;
 
-    /* ===================== MODE HISTOGRAMME ===================== */
+
     if (argc == 4 && strcmp(argv[1], "histo") == 0) {
 
         char *fichier_csv = argv[2];
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    /* ===================== MODE LEAKS ===================== */
+   
     if (argc == 4 && strcmp(argv[1], "leaks") == 0) {
 
         char *fichier_csv = argv[2];
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    /* ===================== ERREUR D'USAGE ===================== */
+    
     printf("Utilisation :\n");
     printf("  Histogrammes : ./projet_final <csv> histo <max|src|real>\n");
     printf("  Leaks        : ./projet_final <csv> leaks <id_usine>\n");
