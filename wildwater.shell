@@ -3,6 +3,8 @@
 
 images() {
   # Fonction générant l'histogramme des 10 plus grandes et 50 plus petites usines sous le format PNG
+  # prend le nom d'un fichier de données en argument et va générer deux images à partir de celui si
+  
   
   donnees="$1"
   
@@ -31,7 +33,10 @@ images() {
 
 
 histogrammeMax() {
-  # Fonction appelant la partie du programme C devant exécuter la commande "histo max"
+  # Fonction fournissant au programme C son argument, càd le chemin du fichier de données
+  # ainsi que 'histo' et 'max' pour que le programme C exécute la bonne fonction
+  # appelle la fonction shell génératrice d'images si le programme C ne rencontre pas de problème
+
   if [ ! -r "$1" ] ; then
     echo "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
     exit 1
@@ -53,7 +58,10 @@ histogrammeMax() {
 
 
 histogrammeSrc() {
-  # Fonction appelant la partie du programme C devant exécuter la commande "histo src"
+  # Fonction fournissant au programme C son argument, càd le chemin du fichier de données
+  # ainsi que 'histo' et 'src' pour que le programme C exécute la bonne fonction
+  # appelle la fonction shell génératrice d'images si le programme C ne rencontre pas de problème
+
   if [ ! -r "$1" ] ; then
     echo "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
     exit 1
@@ -75,7 +83,10 @@ histogrammeSrc() {
 
 
 histogrammeReal() {
-  # Fonction appelant la partie du programme C devant exécuter la commande "histo real"
+  # Fonction fournissant au programme C son argument, càd le chemin du fichier de données
+  # ainsi que 'histo' et 'real' pour que le programme C exécute la bonne fonction
+  # appelle la fonction shell génératrice d'images si le programme C ne rencontre pas de problème
+
   if [ ! -r "$1" ] ; then
     echo "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
     exit 1
@@ -97,7 +108,9 @@ histogrammeReal() {
 
 
 histogramme() {
-  # Fonction appelant une autre fonction correspondante à l'argument secondaire de l'histogramme
+  # Fonction appelant une autre fonction dans le script shell correspondante à 
+  # l'argument secondaire de l'histogramme càd une fonction pour max, src, et real
+
   if [ ! -r "$1" ] ; then
     echo "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
     exit 1
@@ -116,7 +129,11 @@ histogramme() {
 
 
 leaks() {
-  # Fonction appelant la partie du programme C devant exécuter la commande "leaks IDusine"
+  # Fonction fournissant au programme C ses deux arguments,
+  # le chemin d'accès au fichier de données CSV en premier argument
+  # et l'identifiant d'une usine comme second argument ainsi que 'leaks' pour que le programme
+  # C exécute la bonne fonction
+
   if [ ! -r "$1" ] ; then
     echo "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
     exit 1
@@ -138,7 +155,7 @@ leaks() {
 }
 
 
-# Recompilation du programme C si celui si n'existe pas
+# Recompilation du programme C avec make si celui si n'existe pas
 if [ ! -x 'projet_final' ] ; then
   if [ -e "Makefile" ] ; then
     make
@@ -158,7 +175,7 @@ if [ $# -ne 3 ] ; then
   exit 1
 fi
 
-# Vérification du premier argument (le fichier existe et est accessible en lecture)
+# Vérification du premier argument (le fichier CSV de données existe et est accessible en lecture)
 if [ ! -r "$1" ] ; then
   echo  "Erreur : le chemin d'accès au fichier est incorrect ou le script n'y a pas accès en lecture"
   exit 1
