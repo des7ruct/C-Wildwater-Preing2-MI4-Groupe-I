@@ -140,7 +140,7 @@ leaks() {
 
 # Recompilation du programme C si celui si n'existe pas
 if [ ! -x 'projet_final' ] ; then
-  $(gcc -o projet_final main.c avl.c usine.c histogramme.c outils.c leaks.c -Wall -Wextra)
+  make
   if [ ! -x 'projet_final' ] ; then
     echo "Erreur : les fichiers pour la compilation du programme C ne sont pas tous présents"
     exit 1
